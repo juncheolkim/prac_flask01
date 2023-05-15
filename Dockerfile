@@ -6,7 +6,7 @@ EXPOSE 5000
 WORKDIR /app
 # requirements.txt 에 적힌 목록 설치
 # 주의사항 - COPY를 안하면 Docker는 requirements.txt를 모르기 때문에 RUN 전에 해당 파일을 COPY 해야한다.
-COPY requirements.txt ./requirements.txt
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 # . (모든 소스를) . (여기에 있는 것들을 복사)
 COPY . .
@@ -22,3 +22,6 @@ CMD ["flask","run","--host","0.0.0.0"]
 # docker run -d -p 5005:5000 rest-api-flask-python
 # OR
 # docker run -dp 5005:5000 rest-api-flask-python
+
+# 코드 변경할 때 마다 동기화 시켜주는 명령어
+# docker run -dp 5005:5000 -w /app -v "$(pwd):/app" rest-api-flask-python
